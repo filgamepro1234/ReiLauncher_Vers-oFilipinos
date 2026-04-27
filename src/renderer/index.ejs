@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rei Launcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+
+<div class="bg-fill" id="bg-fill"></div>
+<div class="glass-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+</div>
+<div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<div class="app-shell">
+
+    <!-- ── SIDEBAR ──────────────────────────────────────── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+                <rect x="5" y="12" width="8" height="18" fill="#7df9ff"/>
+                <rect x="16" y="6" width="8" height="24" fill="#38bdf8"/>
+                <rect x="27" y="14" width="8" height="16" fill="#7df9ff"/>
+            </svg>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-btn active" data-tab="play" data-tip="Jogar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button class="nav-btn" data-tab="users" data-tip="Contas">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </button>
+            <button class="nav-btn" data-tab="screenshots" data-tip="Galeria">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </button>
+            <button class="nav-btn" data-tab="settings" data-tip="Ajustes">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l1.72-1.34c.15-.12.19-.34.1-.51l-1.63-2.83c-.12-.22-.37-.29-.59-.22l-2.03.81c-.42-.32-.86-.58-1.35-.78l-.31-2.15c-.05-.24-.24-.41-.5-.41h-3.26c-.26 0-.45.17-.49.41l-.31 2.15c-.48.2-.93.47-1.35.78l-2.03-.81c-.22-.09-.47 0-.59.22L2.74 8.87c-.09.17-.04.39.1.51l1.72 1.34c-.05.3-.07.62-.07.94s.02.64.07.94l-1.72 1.34c-.15.12-.19.34-.1.51l1.63 2.83c.12.22.37.29.59.22l2.03-.81c.42.32.86.58 1.35.78l.31 2.15c.05.24.24.41.5.41h3.26c.26 0 .45-.17.49-.41l.31-2.15c.48-.2.93-.47 1.35-.78l2.03.81c.22.09.47 0 .59-.22l1.63-2.83c.09-.17.05-.39-.1-.51l-1.72-1.34zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            </button>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-bottom">
+            <img class="sidebar-avatar" id="sidebar-avatar"
+                 src="https://minotar.net/helm/<%= typeof account !== 'undefined' && account ? account.username : 'Steve' %>/64"
+                 alt="Avatar" title="<%= typeof account !== 'undefined' && account ? account.username : 'Convidado' %>">
+            <div class="sidebar-controls">
+                <button id="min-btn" class="ctrl-btn" title="Minimizar">
+                    <svg width="10" height="10" viewBox="0 0 12 12"><rect x="2" y="5.5" width="8" height="1" fill="currentColor"/></svg>
+                </button>
+                <button id="close-btn" class="ctrl-btn ctrl-close" title="Fechar">
+                    <svg width="10" height="10" viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ── TOPBAR ────────────────────────────────────────── -->
+    <header class="topbar">
+        <div class="topbar-title">Rei<span>Launcher</span></div>
+
+        <div class="topbar-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" type="text" id="search-input" placeholder="Pesquisar versão..." autocomplete="off">
+        </div>
+
+        <div class="topbar-spacer"></div>
+
+        <div id="java-badge" class="java-badge" title="Java detetado">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M9.37 5.51c-.18.64-.27 1.29-.27 1.94 0 4.03 3.37 7.32 7.52 7.32.55 0 1.09-.06 1.6-.17-.51 1.13-1.31 2.11-2.31 2.84C14.5 18.1 13 18.5 11.42 18.5c-3.97 0-7.19-3.14-7.19-7a6.84 6.84 0 0 1 5.14-6.6M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3z"/></svg>
+            <span id="java-version-text">A detetar...</span>
+        </div>
+
+        <div class="profile-chip" id="profile-chip">
+            <img id="profile-avatar" src="https://minotar.net/helm/<%= typeof account !== 'undefined' && account ? account.username : 'Steve' %>/64" alt="Avatar">
+            <div>
+                <div class="profile-chip-name" id="profile-name"><%= typeof account !== 'undefined' && account ? account.username : 'Convidado' %></div>
+                <div class="profile-chip-status">Online</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── MAIN ──────────────────────────────────────────── -->
+    <main class="main-content">
+        <div class="tabs-content">
+
+            <!-- PLAY TAB -->
+            <div class="tab-panel active" id="play-tab">
+                <div class="play-layout">
+
+                    <!-- Hero card -->
+                    <section class="hero-card">
+                        <div class="hero-blocks" aria-hidden="true">
+                            <span class="b b1"></span><span class="b b2"></span><span class="b b3"></span>
+                            <span class="b b4"></span><span class="b b5"></span><span class="b b6"></span>
+                        </div>
+                        <div class="hero-content">
+                            <span class="hero-eyebrow"><span class="live-dot"></span>Pronto para jogar</span>
+                            <h1 class="hero-title">Minecraft</h1>
+                            <p class="hero-subtitle">Construa, explore e sobreviva. Escolha uma versão e mergulhe no seu próximo mundo.</p>
+                            <div class="hero-controls">
+                                <div class="form-group">
+                                    <label for="version-select">Versão</label>
+                                    <div class="select-wrap">
+                                        <select id="version-select" class="glass-input">
+                                            <option disabled selected>A carregar...</option>
+                                        </select>
+                                        <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                </div>
+                                <button id="play-btn" class="btn-play">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    JOGAR
+                                </button>
+                            </div>
+                            <div id="progress-section" class="progress-section hidden">
+                                <div class="progress-info">
+                                    <p id="progress-status" class="progress-status">A preparar...</p>
+                                    <span id="progress-percent" class="progress-percent">0%</span>
+                                </div>
+                                <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Right aside -->
+                    <aside class="play-aside">
+                        <div class="aside-card">
+                            <div class="aside-card-icon aside-card-icon-amber">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H5v-2h6v2zm0-4H5v-2h6v2zm0-4H5V7h6v2zm7 8h-5V7h5v10z"/></svg>
+                            </div>
+                            <h3>Novidades</h3>
+                            <p>Últimos snapshots e updates. Fique por dentro das mudanças mais recentes.</p>
+                            <span class="aside-tag">atualizado hoje</span>
+                        </div>
+                        <div class="aside-card">
+                            <div class="aside-card-icon aside-card-icon-cyan">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-2 19c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-1h-4v1z"/></svg>
+                            </div>
+                            <h3>Dica rápida</h3>
+                            <p>Aloque pelo menos <strong>4 GB de RAM</strong> para versões modernas. Configure em <em>Ajustes</em>.</p>
+                            <span class="aside-tag">performance</span>
+                        </div>
+                    </aside>
+
+                    <!-- Stats row -->
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <span class="stat-label">Versões</span>
+                            <span class="stat-value" id="stat-versions-count">—</span>
+                            <span class="stat-meta">disponíveis</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">RAM</span>
+                            <span class="stat-value">4<span class="stat-unit">GB</span></span>
+                            <span class="stat-meta">alocados</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Resolução</span>
+                            <span class="stat-value">1080<span class="stat-unit">p</span></span>
+                            <span class="stat-meta">full hd</span>
+                        </div>
+                        <div class="stat-card stat-card-green">
+                            <span class="stat-label">Status</span>
+                            <span class="stat-value stat-value-green">Online</span>
+                            <span class="stat-meta">servidores ok</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- USERS TAB -->
+            <div class="tab-panel" id="users-tab">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Contas</h2>
+                        <p class="section-subtitle">Adicione, troque e gerencie as suas contas Minecraft.</p>
+                    </div>
+                    <div class="section-actions">
+                        <button id="add-offline-btn" class="btn-secondary">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            Conta Offline
+                        </button>
+                        <button id="add-microsoft-btn" class="btn-primary btn-sm">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/></svg>
+                            Microsoft
+                        </button>
+                    </div>
+                </div>
+                <div class="accounts-list glass-panel" id="accounts-list"></div>
+            </div>
+
+            <!-- SCREENSHOTS TAB -->
+            <div class="tab-panel" id="screenshots-tab">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Galeria</h2>
+                        <p class="section-subtitle">As suas capturas de ecrã mais recentes.</p>
+                    </div>
+                </div>
+                <div class="screenshots-grid" id="screenshots-grid"></div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div class="tab-panel" id="settings-tab">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Ajustes</h2>
+                        <p class="section-subtitle">Personalize a sua experiência no launcher.</p>
+                    </div>
+                </div>
+                <div class="settings-grid">
+
+                    <div class="settings-group">
+                        <div class="settings-group-header"><span class="settings-dot"></span><h3>Jogo</h3></div>
+                        <div class="settings-item">
+                            <label for="ram-setting">Memória RAM (GB)</label>
+                            <input type="number" id="ram-setting" class="glass-input" value="4" min="1" max="32">
+                        </div>
+                        <div class="settings-item">
+                            <label for="resolution-setting">Resolução</label>
+                            <div class="select-wrap">
+                                <select id="resolution-setting" class="glass-input">
+                                    <option value="1280x720">1280×720 (HD)</option>
+                                    <option value="1600x900">1600×900 (HD+)</option>
+                                    <option value="1920x1080" selected>1920×1080 (Full HD)</option>
+                                    <option value="2560x1440">2560×1440 (QHD)</option>
+                                </select>
+                                <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-group-header"><span class="settings-dot"></span><h3>Aparência</h3></div>
+                        <div class="settings-item settings-row">
+                            <div><label>Tema Escuro</label><small>Visual escuro com blur de vidro</small></div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="theme-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-item">
+                            <label for="opacity-setting">Transparência do Fundo</label>
+                            <div class="slider-wrap">
+                                <input type="range" id="opacity-setting" class="glass-slider" min="0" max="100" value="92">
+                                <span id="opacity-value" class="slider-value">92%</span>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <label>Cor de Fundo</label>
+                            <div class="color-presets" id="color-presets">
+                                <button class="color-preset active" data-color="#070d1a" style="background:#070d1a" title="Azul escuro"></button>
+                                <button class="color-preset" data-color="#160a28" style="background:#160a28" title="Roxo escuro"></button>
+                                <button class="color-preset" data-color="#0a2814" style="background:#0a2814" title="Verde escuro"></button>
+                                <button class="color-preset" data-color="#28100a" style="background:#28100a" title="Vermelho escuro"></button>
+                                <button class="color-preset" data-color="#1a1a1a" style="background:#1a1a1a" title="Cinzento"></button>
+                                <button class="color-preset" data-color="#0a2028" style="background:#0a2028" title="Ciano escuro"></button>
+                                <input type="color" id="bg-color-setting" class="color-picker" value="#070d1a" title="Cor personalizada">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-group-header"><span class="settings-dot dot-red"></span><h3>Conta</h3></div>
+                        <p class="settings-help">Ao desconectar, as suas credenciais serão removidas deste dispositivo.</p>
+                        <button id="logout-btn" class="btn-danger">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                            Desconectar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="offline-modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+        <p class="modal-title">Adicionar Conta Offline</p>
+        <p class="modal-sub">O nome será usado para jogar sem autenticação Microsoft.</p>
+        <input class="modal-input" id="offline-username-input" type="text" placeholder="Nome de utilizador..." maxlength="16" autocomplete="off" spellcheck="false">
+        <div class="modal-actions">
+            <button class="modal-cancel" id="modal-cancel-btn">Cancelar</button>
+            <button class="modal-confirm" id="modal-confirm-btn">Adicionar</button>
+        </div>
+    </div>
+</div>
+
+<script src="./renderer.js"></script>
+</body>
+</html>
